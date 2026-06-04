@@ -42,26 +42,25 @@
     }
 
     .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 48px;
-      background: rgba(245, 240, 238, 0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-radius: 999px;
-      padding: 10px 16px 10px 32px;
-      width: 100%;
-      max-width: 1200px;
-      transition: all 0.4s cubic-bezier(0.22,1,0.36,1);
-    }
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  background: rgba(245, 240, 238, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 999px;
+  padding: 10px 16px 10px 32px;
+  width: 100%;
+  max-width: 1200px;
+  transition: all 0.4s cubic-bezier(0.22,1,0.36,1);
+}
 
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 48px;
-      flex: 1;
-      justify-content: center;
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  justify-content: center;
+  grid-column: 2;
     }
 
     .nav-links a {
