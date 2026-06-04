@@ -50,28 +50,15 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -62%);
       width: 600px;
       height: 600px;
       filter: blur(55px);
       opacity: 0;
-      animation: blobFadeIn 2.2s ease 0.3s forwards;
+      transition: opacity 2.2s ease;
     }
 
-    @keyframes blobFadeIn {
-      to { opacity: 0.8; }
-    }
-
-    @keyframes morph1 {
-      0%, 100% { d: path("M280,80 C390,55 465,145 440,245 C415,345 325,405 220,392 C115,379 55,300 72,200 C89,100 170,105 280,80Z"); }
-      33%      { d: path("M305,68 C415,78 462,172 428,272 C394,362 305,415 198,393 C91,371 45,278 78,178 C111,78 195,58 305,68Z"); }
-      66%      { d: path("M255,92 C375,48 472,152 448,252 C424,352 328,425 215,402 C102,379 50,288 74,188 C98,88 135,136 255,92Z"); }
-    }
-
-    @keyframes morph2 {
-      0%, 100% { d: path("M295,105 C375,68 452,152 430,252 C408,352 315,408 208,390 C101,372 58,292 82,192 C106,92 215,142 295,105Z"); }
-      40%      { d: path("M268,88 C392,62 462,164 436,264 C410,358 312,418 200,398 C88,378 50,282 80,182 C110,82 144,114 268,88Z"); }
-      75%      { d: path("M315,72 C425,88 468,185 436,282 C404,372 305,422 192,399 C79,376 48,275 82,175 C116,75 205,56 315,72Z"); }
+    .blob-svg.visible {
+      opacity: 1;
     }
 
     .hero-content {
@@ -192,12 +179,12 @@
         </linearGradient>
       </defs>
       <path id="blob1"
-        d="M280,80 C390,55 465,145 440,245 C415,345 325,405 220,392 C115,379 55,300 72,200 C89,100 170,105 280,80Z"
-        fill="url(#blobGrad)" opacity="0.9"
+        d="M250,60 C380,20 500,80 470,220 C440,360 320,460 160,420 C0,380 20,200 80,100 C140,0 120,100 250,60Z"
+        fill="url(#blobGrad)" opacity="1"
       />
       <path id="blob2"
-        d="M295,105 C375,68 452,152 430,252 C408,352 315,408 208,390 C101,372 58,292 82,192 C106,92 215,142 295,105Z"
-        fill="#98E6E1" opacity="0.45"
+        d="M280,50 C430,10 510,130 470,290 C430,450 260,490 90,430 C-80,370 20,160 110,60 C200,-40 130,90 280,50Z"
+        fill="#98E6E1" opacity="0.6"
       />
     </svg>
   </div>
@@ -224,10 +211,14 @@
   </div>
 
 </section>
+
 <script>
   const blob1 = document.getElementById('blob1');
   const blob2 = document.getElementById('blob2');
   const svgEl = document.querySelector('.blob-svg');
+
+  // Fade in via class instead of CSS animation (no conflict)
+  setTimeout(() => svgEl.classList.add('visible'), 300);
 
   const shapes1 = [
     "M250,60 C380,20 500,80 470,220 C440,360 320,460 160,420 C0,380 20,200 80,100 C140,0 120,100 250,60Z",
@@ -242,9 +233,7 @@
   ];
 
   function lerp(a, b, t) { return a + (b - a) * t; }
-
   function easeInOut(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
-
   function parsePath(d) { return d.match(/-?\d+\.?\d*/g).map(Number); }
 
   const template1 = shapes1[0];
@@ -285,12 +274,10 @@
     const i = Math.min(Math.floor(scaled), total - 1);
     const j = i + 1;
     const frac = easeInOut(scaled - i);
-    const a = waypoints[i];
-    const b = waypoints[j];
     return {
-      x: lerp(a.x, b.x, frac),
-      y: lerp(a.y, b.y, frac),
-      r: lerp(a.r, b.r, frac),
+      x: lerp(waypoints[i].x, waypoints[j].x, frac),
+      y: lerp(waypoints[i].y, waypoints[j].y, frac),
+      r: lerp(waypoints[i].r, waypoints[j].r, frac),
     };
   }
 
@@ -300,21 +287,20 @@
   const speed2 = 0.0005;
 
   function tick(ts) {
-    // morph shapes
     t1 = (t1 + speed1) % 1;
     t2 = (t2 + speed2) % 1;
+
     blob1.setAttribute('d', rebuildPath(template1, interpolate(parsed1, t1)));
     blob2.setAttribute('d', rebuildPath(template2, interpolate(parsed2, t2)));
 
-    // move + rotate the whole SVG
     const { x, y, r } = getWaypoint(ts);
     svgEl.style.transform = `translate(calc(-50% + ${x}px), calc(-62% + ${y}px)) rotate(${r}deg)`;
 
     requestAnimationFrame(tick);
   }
 
-  // kick off only after DOM is ready
-  window.addEventListener('load', () => requestAnimationFrame(tick));
+  requestAnimationFrame(tick);
 </script>
+
 </body>
 </html>
