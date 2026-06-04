@@ -62,9 +62,6 @@
       to { opacity: 0.8; }
     }
 
-    #blob1 { animation: morph1 16s ease-in-out infinite; }
-    #blob2 { animation: morph2 21s ease-in-out infinite; }
-
     @keyframes morph1 {
       0%, 100% { d: path("M280,80 C390,55 465,145 440,245 C415,345 325,405 220,392 C115,379 55,300 72,200 C89,100 170,105 280,80Z"); }
       33%      { d: path("M305,68 C415,78 462,172 428,272 C394,362 305,415 198,393 C91,371 45,278 78,178 C111,78 195,58 305,68Z"); }
@@ -227,6 +224,59 @@
   </div>
 
 </section>
+<script>
+  const blob1 = document.getElementById('blob1');
+  const blob2 = document.getElementById('blob2');
 
+  const shapes1 = [
+    [280,80, 390,55, 465,145, 440,245, 415,345, 325,405, 220,392, 115,379, 55,300, 72,200, 89,100, 170,105],
+    [305,68, 415,78, 462,172, 428,272, 394,362, 305,415, 198,393, 91,371, 45,278, 78,178, 111,78, 195,58],
+    [255,92, 375,48, 472,152, 448,252, 424,352, 328,425, 215,402, 102,379, 50,288, 74,188, 98,88, 135,136],
+  ];
+
+  const shapes2 = [
+    [295,105, 375,68, 452,152, 430,252, 408,352, 315,408, 208,390, 101,372, 58,292, 82,192, 106,92, 215,142],
+    [268,88, 392,62, 462,164, 436,264, 410,358, 312,418, 200,398, 88,378, 50,282, 80,182, 110,82, 144,114],
+    [315,72, 425,88, 468,185, 436,282, 404,372, 305,422, 192,399, 79,376, 48,275, 82,175, 116,75, 205,56],
+  ];
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+
+  function buildPath(pts) {
+    return `M${pts[0]},${pts[1]} C${pts[2]},${pts[3]} ${pts[4]},${pts[5]} ${pts[6]},${pts[7]} C${pts[8]},${pts[9]} ${pts[10]},${pts[11]} ${pts[12]},${pts[13]} C${pts[14]},${pts[15]} ${pts[16]},${pts[17]} ${pts[18]},${pts[19]} C${pts[20]},${pts[21]} ${pts[22]},${pts[23]} ${pts[0]},${pts[1]}Z`;
+  }
+
+  function interpolateShapes(shapes, t) {
+    const total = shapes.length;
+    const scaled = t * total;
+    const i = Math.floor(scaled) % total;
+    const j = (i + 1) % total;
+    const frac = scaled - Math.floor(scaled);
+    return shapes[i].map((v, k) => lerp(v, shapes[j][k], frac));
+  }
+
+  function easeInOut(t) {
+    return t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
+  }
+
+  const speed1 = 0.00004;
+  const speed2 = 0.000028;
+  let t1 = 0, t2 = 0.3;
+
+  function animate() {
+    t1 = (t1 + speed1) % 1;
+    t2 = (t2 + speed2) % 1;
+
+    const pts1 = interpolateShapes(shapes1, t1);
+    const pts2 = interpolateShapes(shapes2, t2);
+
+    blob1.setAttribute('d', buildPath(pts1));
+    blob2.setAttribute('d', buildPath(pts2));
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+</script>
 </body>
 </html>
