@@ -50,8 +50,8 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 600px;
-      height: 600px;
+      width: 380px;
+      height: 250px;
       filter: blur(55px);
       opacity: 0;
       transition: opacity 2.2s ease;
@@ -295,6 +295,8 @@
 
     const { x, y, r } = getWaypoint(ts);
     svgEl.style.transform = `translate(calc(-50% + ${x}px), calc(-62% + ${y}px)) rotate(${r}deg)`;
+    const pulse = 0.55 + Math.sin(ts * 0.0004) * 0.2;
+svgEl.style.opacity = pulse;
 
     requestAnimationFrame(tick);
   }
