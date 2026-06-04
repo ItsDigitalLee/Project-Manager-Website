@@ -42,25 +42,24 @@
     }
 
     .nav-inner {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  background: rgba(245, 240, 238, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 999px;
-  padding: 10px 16px 10px 32px;
-  width: 100%;
-  max-width: 1200px;
-  transition: all 0.4s cubic-bezier(0.22,1,0.36,1);
-}
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      background: rgba(245, 240, 238, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 999px;
+      padding: 10px 10px 10px 32px;
+      width: 100%;
+      max-width: 1200px;
+      transition: all 0.4s cubic-bezier(0.22,1,0.36,1);
+    }
 
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 48px;
-  justify-content: center;
-  grid-column: 2;
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      justify-content: center;
     }
 
     .nav-links a {
@@ -74,6 +73,11 @@
 
     .nav-links a:hover {
       opacity: 0.5;
+    }
+
+    .nav-end {
+      display: flex;
+      justify-content: flex-end;
     }
 
     .nav-cta {
@@ -257,15 +261,18 @@
 
 <nav class="nav" id="main-nav">
   <div class="nav-inner">
+    <div></div>
     <div class="nav-links">
       <a href="#about">About</a>
       <a href="#services">Services</a>
       <a href="#process">Process</a>
     </div>
-    <a href="https://cal.com/christian-digitallee/15min" class="nav-cta" target="_blank" rel="noopener">
-      <img src="Christian_Lee_logo_green_background.png" alt="Christian Lee" class="nav-avatar" />
-      <span>Book a call</span>
-    </a>
+    <div class="nav-end">
+      <a href="https://cal.com/christian-digitallee/15min" class="nav-cta" target="_blank" rel="noopener">
+        <img src="Christian_Lee_logo_green_background.png" alt="Christian Lee" class="nav-avatar" />
+        <span>Book a call</span>
+      </a>
+    </div>
   </div>
 </nav>
 
