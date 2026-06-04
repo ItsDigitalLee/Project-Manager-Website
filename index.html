@@ -27,30 +27,104 @@
       min-height: 100vh;
       overflow-x: hidden;
     }
-    <nav class="nav" id="main-nav">
-  <div class="nav-inner">
-    <div class="nav-links">
-      <a href="#about">About</a>
-      <a href="#services">Services</a>
-      <a href="#process">Process</a>
-    </div>
-    <a href="https://cal.com/christian-digitallee/15min" class="nav-cta" target="_blank" rel="noopener">
-      <img src="Christian Lee logo green background.png" alt="Christian Lee" class="nav-avatar" />
-      <span>Book a call</span>
-    </a>
-  </div>
-</nav>
 
-.hero {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  padding-top: 80px;
-}
+    /* ── NAV ── */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      padding: 16px 40px;
+      transition: padding 0.4s ease;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 48px;
+      background: rgba(245, 240, 238, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 999px;
+      padding: 10px 16px 10px 32px;
+      width: 100%;
+      max-width: 1200px;
+      transition: all 0.4s cubic-bezier(0.22,1,0.36,1);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .nav-links a {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: #1a1a1a;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      opacity: 0.5;
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,0,0,0.06);
+      border-radius: 999px;
+      padding: 6px 16px 6px 6px;
+      text-decoration: none;
+      color: #1a1a1a;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: background 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover {
+      background: rgba(0,0,0,0.1);
+    }
+
+    .nav-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .nav.scrolled {
+      padding: 16px 80px;
+    }
+
+    .nav.scrolled .nav-inner {
+      max-width: 600px;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.12);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding-top: 80px;
+    }
 
     .orb-wrap {
       position: absolute;
@@ -65,7 +139,7 @@
       top: 50%;
       left: 50%;
       width: 380px;
-      height: 250px;
+      height: 380px;
       filter: blur(55px);
       opacity: 0;
       transition: opacity 2.2s ease;
@@ -168,6 +242,7 @@
     .clients img.logo-peak {
       filter: none;
       opacity: 0.85;
+      height: 42px;
     }
 
     .clients img:hover {
@@ -178,95 +253,23 @@
       from { opacity: 0; transform: translateY(22px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-/* ── NAV ── */
-.nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  display: flex;
-  justify-content: center;
-  padding: 16px 40px;
-  transition: padding 0.4s ease;
-}
-
-.nav-inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 48px;
-  background: rgba(245, 240, 238, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 999px;
-  padding: 10px 16px 10px 32px;
-  width: 100%;
-  max-width: 1200px;
-  transition: all 0.4s cubic-bezier(0.22,1,0.36,1);
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 48px;
-  flex: 1;
-  justify-content: center;
-}
-
-.nav-links a {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.95rem;
-  font-weight: 400;
-  color: #1a1a1a;
-  text-decoration: none;
-  transition: opacity 0.2s ease;
-}
-
-.nav-links a:hover {
-  opacity: 0.5;
-}
-
-.nav-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(0,0,0,0.06);
-  border-radius: 999px;
-  padding: 6px 16px 6px 6px;
-  text-decoration: none;
-  color: #1a1a1a;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: background 0.2s ease;
-  white-space: nowrap;
-}
-
-.nav-cta:hover {
-  background: rgba(0,0,0,0.1);
-}
-
-.nav-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
-  display: block;
-}
-
-/* ── SCROLLED (floater) state ── */
-.nav.scrolled {
-  padding: 16px 80px;
-}
-
-.nav.scrolled .nav-inner {
-  max-width: 600px;
-  box-shadow: 0 4px 32px rgba(0,0,0,0.12);
-}
   </style>
 </head>
 <body>
+
+<nav class="nav" id="main-nav">
+  <div class="nav-inner">
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+    </div>
+    <a href="https://cal.com/christian-digitallee/15min" class="nav-cta" target="_blank" rel="noopener">
+      <img src="Christian Lee logo green background.png" alt="Christian Lee" class="nav-avatar" />
+      <span>Book a call</span>
+    </a>
+  </div>
+</nav>
 
 <section class="hero">
 
@@ -295,19 +298,18 @@
       Freelance project manager for agencies and brands. I embed fast, create
       clarity, and make sure nothing falls through the cracks — so you don't have to.
     </p>
-
     <a href="https://cal.com/christian-digitallee/15min" class="cta-btn" target="_blank" rel="noopener">
-      <img src="Christian_Lee_logo_green_background.png" alt="Christian Lee" class="cta-avatar" />
+      <img src="Christian Lee logo green background.png" alt="Christian Lee" class="cta-avatar" />
       Book a call
     </a>
   </div>
 
   <div class="clients">
-    <img src="pasqal_logo_1.png"                    alt="Pasqal" />
-<img src="Peak_Logo__1__1.png" alt="Peak Serum" class="logo-peak" style="height: 42px;" />    
-    <img src="Group.png"                            alt="Huawei" />
-    <img src="logo-bemyapp-white_1.png"             alt="BEMYAPP" />
-    <img src="ActiveLoop-Logo_1__Vectorized__1.png" alt="Activeloop" class="logo-activeloop" style="height: 38px;"  />
+    <img src="pasqal logo 1.png"                        alt="Pasqal" />
+    <img src="Peak_Logo (1) 1.png"                      alt="Peak Serum" class="logo-peak" />
+    <img src="Group.png"                                alt="Huawei" />
+    <img src="logo-bemyapp-white 1.png"                 alt="BEMYAPP" />
+    <img src="ActiveLoop-Logo 1 [Vectorized] 1.png"     alt="Activeloop" />
   </div>
 
 </section>
@@ -317,7 +319,6 @@
   const blob2 = document.getElementById('blob2');
   const svgEl = document.querySelector('.blob-svg');
 
-  // Fade in via class instead of CSS animation (no conflict)
   setTimeout(() => svgEl.classList.add('visible'), 300);
 
   const shapes1 = [
@@ -395,23 +396,19 @@
 
     const { x, y, r } = getWaypoint(ts);
     svgEl.style.transform = `translate(calc(-50% + ${x}px), calc(-62% + ${y}px)) rotate(${r}deg)`;
+
     const pulse = 0.55 + Math.sin(ts * 0.0004) * 0.2;
-svgEl.style.opacity = pulse;
+    svgEl.style.opacity = pulse;
 
     requestAnimationFrame(tick);
   }
 
   requestAnimationFrame(tick);
 
-  // Nav scroll behaviour
-const nav = document.getElementById('main-nav');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 60) {
-    nav.classList.add('scrolled');
-  } else {
-    nav.classList.remove('scrolled');
-  }
-});
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
 </script>
 
 </body>
