@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital Lee — More capacity. Less chaos.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+
+    :root {
+      --green: #00C870;
+      --black: #000000;
+      --white: #ffffff;
+      --text-secondary: rgba(255,255,255,0.65);
+    }
+
+    html, body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .orb-wrap {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .blob-svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -62%);
+      width: 600px;
+      height: 600px;
+      filter: blur(55px);
+      opacity: 0;
+      animation: blobFadeIn 2.2s ease 0.3s forwards;
+    }
+
+    @keyframes blobFadeIn {
+      to { opacity: 0.8; }
+    }
+
+    #blob1 { animation: morph1 16s ease-in-out infinite; }
+    #blob2 { animation: morph2 21s ease-in-out infinite; }
+
+    @keyframes morph1 {
+      0%, 100% { d: path("M280,80 C390,55 465,145 440,245 C415,345 325,405 220,392 C115,379 55,300 72,200 C89,100 170,105 280,80Z"); }
+      33%      { d: path("M305,68 C415,78 462,172 428,272 C394,362 305,415 198,393 C91,371 45,278 78,178 C111,78 195,58 305,68Z"); }
+      66%      { d: path("M255,92 C375,48 472,152 448,252 C424,352 328,425 215,402 C102,379 50,288 74,188 C98,88 135,136 255,92Z"); }
+    }
+
+    @keyframes morph2 {
+      0%, 100% { d: path("M295,105 C375,68 452,152 430,252 C408,352 315,408 208,390 C101,372 58,292 82,192 C106,92 215,142 295,105Z"); }
+      40%      { d: path("M268,88 C392,62 462,164 436,264 C410,358 312,418 200,398 C88,378 50,282 80,182 C110,82 144,114 268,88Z"); }
+      75%      { d: path("M315,72 C425,88 468,185 436,282 C404,372 305,422 192,399 C79,376 48,275 82,175 C116,75 205,56 315,72Z"); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 24px;
+    }
+
+    .hero-headline {
+      font-family: 'Onest', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2.6rem, 6vw, 4.6rem);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(22px);
+      animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.5s forwards;
+    }
+
+    .hero-sub {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: clamp(0.95rem, 1.8vw, 1.125rem);
+      line-height: 1.65;
+      color: var(--text-secondary);
+      max-width: 580px;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(18px);
+      animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.75s forwards;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--white);
+      color: var(--black);
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-decoration: none;
+      padding: 8px 22px 8px 8px;
+      border-radius: 999px;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+      opacity: 0;
+      animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 1s forwards;
+    }
+
+    .cta-btn:hover {
+      transform: scale(1.04);
+      box-shadow: 0 8px 32px rgba(0,200,112,0.3);
+    }
+
+    .cta-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .clients {
+      position: relative;
+      z-index: 1;
+      margin-top: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(28px, 5vw, 64px);
+      flex-wrap: wrap;
+      padding: 0 32px;
+      opacity: 0;
+      animation: fadeUp 1s cubic-bezier(0.22,1,0.36,1) 1.3s forwards;
+    }
+
+    .clients img {
+      height: 28px;
+      width: auto;
+      object-fit: contain;
+      opacity: 0.75;
+      filter: brightness(0) invert(1);
+      transition: opacity 0.2s ease;
+    }
+
+    .clients img.logo-peak {
+      filter: none;
+      opacity: 0.85;
+    }
+
+    .clients img:hover {
+      opacity: 1;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<section class="hero">
+
+  <div class="orb-wrap">
+    <svg class="blob-svg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="blobGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="#1FC379" />
+          <stop offset="100%" stop-color="#98E6E1" />
+        </linearGradient>
+      </defs>
+      <path id="blob1"
+        d="M280,80 C390,55 465,145 440,245 C415,345 325,405 220,392 C115,379 55,300 72,200 C89,100 170,105 280,80Z"
+        fill="url(#blobGrad)" opacity="0.9"
+      />
+      <path id="blob2"
+        d="M295,105 C375,68 452,152 430,252 C408,352 315,408 208,390 C101,372 58,292 82,192 C106,92 215,142 295,105Z"
+        fill="#98E6E1" opacity="0.45"
+      />
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <h1 class="hero-headline">More capacity. Less chaos.</h1>
+    <p class="hero-sub">
+      Freelance project manager for agencies and brands. I embed fast, create
+      clarity, and make sure nothing falls through the cracks — so you don't have to.
+    </p>
+
+    <a href="https://cal.com/christian-digitallee/15min" class="cta-btn" target="_blank" rel="noopener">
+      <img src="Christian_Lee_logo_green_background.png" alt="Christian Lee" class="cta-avatar" />
+      Book a call
+    </a>
+  </div>
+
+  <div class="clients">
+    <img src="pasqal_logo_1.png"                    alt="Pasqal" />
+    <img src="Peak_Logo__1__1.png"                  alt="Peak Serum" class="logo-peak" />
+    <img src="Group.png"                            alt="Huawei" />
+    <img src="logo-bemyapp-white_1.png"             alt="BEMYAPP" />
+    <img src="ActiveLoop-Logo_1__Vectorized__1.png" alt="Activeloop" />
+  </div>
+
+</section>
+
+</body>
+</html>
