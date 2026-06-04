@@ -227,65 +227,61 @@
 <script>
   const blob1 = document.getElementById('blob1');
   const blob2 = document.getElementById('blob2');
+  const svgEl = document.querySelector('.blob-svg');
 
   const shapes1 = [
-    [280,80,  390,30,  480,130, 440,260, 400,370, 300,430, 180,400, 80,340,  40,220,  80,110,  160,60],
-    [320,60,  440,90,  490,200, 450,320, 380,420, 240,450, 110,400, 50,300,  60,180,  130,80,  220,40],
-    [220,100, 360,40,  470,160, 430,290, 370,400, 210,440, 90,390,  40,270,  70,150,  150,70,  180,90],
+    "M250,60 C380,20 500,80 470,220 C440,360 320,460 160,420 C0,380 20,200 80,100 C140,0 120,100 250,60Z",
+    "M300,40 C450,10 520,120 480,280 C440,440 280,480 120,430 C-40,380 10,180 90,80 C170,-20 150,70 300,40Z",
+    "M200,80 C350,10 490,100 460,260 C430,420 260,470 100,420 C-60,370 30,170 100,70 C170,-30 50,150 200,80Z",
   ];
 
   const shapes2 = [
-    [310,120, 420,60,  490,180, 450,310, 390,420, 240,460, 100,410, 45,290,  65,160,  160,80,  240,100],
-    [260,90,  400,50,  480,170, 440,300, 360,430, 200,460, 80,400,  35,270,  60,140,  140,60,  200,70],
-    [340,70,  460,100, 500,210, 455,340, 370,440, 210,470, 85,415,  30,300,  55,165,  145,75,  260,50],
+    "M280,50 C430,10 510,130 470,290 C430,450 260,490 90,430 C-80,370 20,160 110,60 C200,-40 130,90 280,50Z",
+    "M230,70 C390,20 500,140 460,300 C420,460 240,500 70,440 C-100,380 15,150 100,50 C185,-50 70,120 230,70Z",
+    "M320,30 C470,0 530,140 485,310 C440,480 250,510 80,450 C-90,390 10,170 105,55 C200,-60 170,60 320,30Z",
   ];
 
   function lerp(a, b, t) { return a + (b - a) * t; }
+  function easeInOut(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+  function parsePath(d) { return d.match(/-?\d+\.?\d*/g).map(Number); }
 
-  function buildPath(pts) {
-    return `M${pts[0]},${pts[1]} C${pts[2]},${pts[3]} ${pts[4]},${pts[5]} ${pts[6]},${pts[7]} C${pts[8]},${pts[9]} ${pts[10]},${pts[11]} ${pts[12]},${pts[13]} C${pts[14]},${pts[15]} ${pts[16]},${pts[17]} ${pts[18]},${pts[19]} C${pts[20]},${pts[21]} ${pts[0]},${pts[1]} ${pts[0]},${pts[1]}Z`;
+  const template1 = shapes1[0];
+  const template2 = shapes2[0];
+
+  function rebuildPath(template, nums) {
+    let i = 0;
+    return template.replace(/-?\d+\.?\d*/g, () => Math.round(nums[i++]));
   }
 
-  function interpolateShapes(shapes, t) {
-    const total = shapes.length;
+  const parsed1 = shapes1.map(parsePath);
+  const parsed2 = shapes2.map(parsePath);
+
+  function interpolate(parsed, t) {
+    const total = parsed.length;
     const scaled = t * total;
     const i = Math.floor(scaled) % total;
     const j = (i + 1) % total;
-    const frac = scaled - Math.floor(scaled);
-    // ease the fraction
-    const e = frac < 0.5 ? 2*frac*frac : -1+(4-2*frac)*frac;
-    return shapes[i].map((v, k) => lerp(v, shapes[j][k], e));
+    const frac = easeInOut(scaled - Math.floor(scaled));
+    return parsed[i].map((v, k) => lerp(v, parsed[j][k], frac));
   }
 
-  // faster speeds
-  const speed1 = 0.0012;
-  const speed2 = 0.0008;
+  const speed1 = 0.0008;
+  const speed2 = 0.0005;
   let t1 = 0, t2 = 0.4;
 
-  // also drift the whole SVG position
-  const svgEl = document.querySelector('.blob-svg');
-  let driftT = 0;
+  // Waypoints: left 40 → up 50 → right 50 → down 40 → back, with rotation
+  const waypoints = [
+    { x:   0, y:   0, r:   0 },   // start (centre)
+    { x: -40, y:   0, r:  -8 },   // left 40
+    { x: -40, y: -50, r: -16 },   // up 50
+    { x:  10, y: -50, r:   0 },   // right 50
+    { x:  10, y: -10, r:   8 },   // down 40
+    { x:   0, y:   0, r:   0 },   // back to centre
+  ];
 
-  function animate() {
-    t1 = (t1 + speed1) % 1;
-    t2 = (t2 + speed2) % 1;
-    driftT += 0.003;
+  const CYCLE = 12000; // ms for one full loop
 
-    const pts1 = interpolateShapes(shapes1, t1);
-    const pts2 = interpolateShapes(shapes2, t2);
-
-    blob1.setAttribute('d', buildPath(pts1));
-    blob2.setAttribute('d', buildPath(pts2));
-
-    // gentle drift of the whole blob around the screen
-    const x = Math.sin(driftT * 0.6) * 60;
-    const y = Math.cos(driftT * 0.4) * 40;
-    svgEl.style.transform = `translate(calc(-50% + ${x}px), calc(-62% + ${y}px))`;
-
-    requestAnimationFrame(animate);
-  }
-
-  animate();
-</script>
+  function getWaypoint(progress) {
+    const total = waypoints.length -
 </body>
 </html>
