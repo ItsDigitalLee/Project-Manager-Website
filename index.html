@@ -229,21 +229,21 @@
   const blob2 = document.getElementById('blob2');
 
   const shapes1 = [
-    [280,80, 390,55, 465,145, 440,245, 415,345, 325,405, 220,392, 115,379, 55,300, 72,200, 89,100, 170,105],
-    [305,68, 415,78, 462,172, 428,272, 394,362, 305,415, 198,393, 91,371, 45,278, 78,178, 111,78, 195,58],
-    [255,92, 375,48, 472,152, 448,252, 424,352, 328,425, 215,402, 102,379, 50,288, 74,188, 98,88, 135,136],
+    [280,80,  390,30,  480,130, 440,260, 400,370, 300,430, 180,400, 80,340,  40,220,  80,110,  160,60],
+    [320,60,  440,90,  490,200, 450,320, 380,420, 240,450, 110,400, 50,300,  60,180,  130,80,  220,40],
+    [220,100, 360,40,  470,160, 430,290, 370,400, 210,440, 90,390,  40,270,  70,150,  150,70,  180,90],
   ];
 
   const shapes2 = [
-    [295,105, 375,68, 452,152, 430,252, 408,352, 315,408, 208,390, 101,372, 58,292, 82,192, 106,92, 215,142],
-    [268,88, 392,62, 462,164, 436,264, 410,358, 312,418, 200,398, 88,378, 50,282, 80,182, 110,82, 144,114],
-    [315,72, 425,88, 468,185, 436,282, 404,372, 305,422, 192,399, 79,376, 48,275, 82,175, 116,75, 205,56],
+    [310,120, 420,60,  490,180, 450,310, 390,420, 240,460, 100,410, 45,290,  65,160,  160,80,  240,100],
+    [260,90,  400,50,  480,170, 440,300, 360,430, 200,460, 80,400,  35,270,  60,140,  140,60,  200,70],
+    [340,70,  460,100, 500,210, 455,340, 370,440, 210,470, 85,415,  30,300,  55,165,  145,75,  260,50],
   ];
 
   function lerp(a, b, t) { return a + (b - a) * t; }
 
   function buildPath(pts) {
-    return `M${pts[0]},${pts[1]} C${pts[2]},${pts[3]} ${pts[4]},${pts[5]} ${pts[6]},${pts[7]} C${pts[8]},${pts[9]} ${pts[10]},${pts[11]} ${pts[12]},${pts[13]} C${pts[14]},${pts[15]} ${pts[16]},${pts[17]} ${pts[18]},${pts[19]} C${pts[20]},${pts[21]} ${pts[22]},${pts[23]} ${pts[0]},${pts[1]}Z`;
+    return `M${pts[0]},${pts[1]} C${pts[2]},${pts[3]} ${pts[4]},${pts[5]} ${pts[6]},${pts[7]} C${pts[8]},${pts[9]} ${pts[10]},${pts[11]} ${pts[12]},${pts[13]} C${pts[14]},${pts[15]} ${pts[16]},${pts[17]} ${pts[18]},${pts[19]} C${pts[20]},${pts[21]} ${pts[0]},${pts[1]} ${pts[0]},${pts[1]}Z`;
   }
 
   function interpolateShapes(shapes, t) {
@@ -252,26 +252,35 @@
     const i = Math.floor(scaled) % total;
     const j = (i + 1) % total;
     const frac = scaled - Math.floor(scaled);
-    return shapes[i].map((v, k) => lerp(v, shapes[j][k], frac));
+    // ease the fraction
+    const e = frac < 0.5 ? 2*frac*frac : -1+(4-2*frac)*frac;
+    return shapes[i].map((v, k) => lerp(v, shapes[j][k], e));
   }
 
-  function easeInOut(t) {
-    return t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
-  }
+  // faster speeds
+  const speed1 = 0.0012;
+  const speed2 = 0.0008;
+  let t1 = 0, t2 = 0.4;
 
-  const speed1 = 0.00004;
-  const speed2 = 0.000028;
-  let t1 = 0, t2 = 0.3;
+  // also drift the whole SVG position
+  const svgEl = document.querySelector('.blob-svg');
+  let driftT = 0;
 
   function animate() {
     t1 = (t1 + speed1) % 1;
     t2 = (t2 + speed2) % 1;
+    driftT += 0.003;
 
     const pts1 = interpolateShapes(shapes1, t1);
     const pts2 = interpolateShapes(shapes2, t2);
 
     blob1.setAttribute('d', buildPath(pts1));
     blob2.setAttribute('d', buildPath(pts2));
+
+    // gentle drift of the whole blob around the screen
+    const x = Math.sin(driftT * 0.6) * 60;
+    const y = Math.cos(driftT * 0.4) * 40;
+    svgEl.style.transform = `translate(calc(-50% + ${x}px), calc(-62% + ${y}px))`;
 
     requestAnimationFrame(animate);
   }
