@@ -242,7 +242,9 @@
   ];
 
   function lerp(a, b, t) { return a + (b - a) * t; }
+
   function easeInOut(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+
   function parsePath(d) { return d.match(/-?\d+\.?\d*/g).map(Number); }
 
   const template1 = shapes1[0];
@@ -265,25 +267,54 @@
     return parsed[i].map((v, k) => lerp(v, parsed[j][k], frac));
   }
 
-  const speed1 = 0.0008;
-  const speed2 = 0.0005;
-  let t1 = 0, t2 = 0.4;
-
-  // Waypoints: left 40 → up 50 → right 50 → down 40 → back, with rotation
   const waypoints = [
-    { x:   0, y:   0, r:   0 },   // start (centre)
-    { x: -40, y:   0, r:  -8 },   // left 40
-    { x: -40, y: -50, r: -16 },   // up 50
-    { x:  10, y: -50, r:   0 },   // right 50
-    { x:  10, y: -10, r:   8 },   // down 40
-    { x:   0, y:   0, r:   0 },   // back to centre
+    { x:   0, y:   0, r:  0 },
+    { x: -40, y:   0, r: -8 },
+    { x: -40, y: -50, r:-16 },
+    { x:  10, y: -50, r:  0 },
+    { x:  10, y: -10, r:  8 },
+    { x:   0, y:   0, r:  0 },
   ];
 
-  const CYCLE = 12000; // ms for one full loop
+  const CYCLE = 12000;
 
-  function getWaypoint(progress) {
-    const total = waypoints.length -
+  function getWaypoint(ts) {
+    const progress = (ts % CYCLE) / CYCLE;
+    const total = waypoints.length - 1;
+    const scaled = progress * total;
+    const i = Math.min(Math.floor(scaled), total - 1);
+    const j = i + 1;
+    const frac = easeInOut(scaled - i);
+    const a = waypoints[i];
+    const b = waypoints[j];
+    return {
+      x: lerp(a.x, b.x, frac),
+      y: lerp(a.y, b.y, frac),
+      r: lerp(a.r, b.r, frac),
+    };
+  }
 
+  let t1 = 0;
+  let t2 = 0.4;
+  const speed1 = 0.0008;
+  const speed2 = 0.0005;
+
+  function tick(ts) {
+    // morph shapes
+    t1 = (t1 + speed1) % 1;
+    t2 = (t2 + speed2) % 1;
+    blob1.setAttribute('d', rebuildPath(template1, interpolate(parsed1, t1)));
+    blob2.setAttribute('d', rebuildPath(template2, interpolate(parsed2, t2)));
+
+    // move + rotate the whole SVG
+    const { x, y, r } = getWaypoint(ts);
+    svgEl.style.transform = `translate(calc(-50% + ${x}px), calc(-62% + ${y}px)) rotate(${r}deg)`;
+
+    requestAnimationFrame(tick);
+  }
+
+  // kick off only after DOM is ready
+  window.addEventListener('load', () => requestAnimationFrame(tick));
 </script>
 </body>
 </html>
