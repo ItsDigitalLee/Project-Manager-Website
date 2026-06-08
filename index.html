@@ -3,17 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Digital Lee — More capacity. Less chaos.</title>
+  <title>Christian Lee — Freelance Project Manager</title>
+  <link rel="icon" type="image/png" href="Christian_Lee_logo_green_background.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
 
+  <script>
+    window.axeptioSettings = {
+      clientId: "6a26dfa8f2ed0dc95590ebe4",
+      cookiesVersion: "3c9d94e0-9b43-4007-a455-771cefa7ab0a",
+      googleConsentMode: {
+        default: {
+          analytics_storage: "denied",
+          ad_storage: "denied",
+          ad_user_data: "denied",
+          ad_personalization: "denied",
+          wait_for_update: 500
+        }
+      }
+    };
+    (function(d, s) {
+      var t = d.getElementsByTagName(s)[0], e = d.createElement(s);
+      e.async = true; e.src = "//static.axept.io/sdk.js";
+      t.parentNode.insertBefore(e, t);
+    })(document, "script");
+  </script>
+
   <style>
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
       --green: #00C870;
@@ -30,6 +48,109 @@
       overflow-x: hidden;
     }
 
+    /* ── NAV ── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      padding: 16px 40px;
+      transition: padding 0.4s ease;
+    }
+
+    .nav-inner {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(245,240,238,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 999px;
+      padding: 10px;
+      width: 100%;
+      max-width: 1200px;
+      transition: all 0.4s cubic-bezier(0.22,1,0.36,1);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 64px;
+      justify-content: center;
+      flex: 1;
+    }
+
+    .nav-links a {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: #1a1a1a;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .nav-links a:hover { opacity: 0.5; }
+
+    .nav-end {
+      display: flex;
+      justify-content: flex-end;
+      flex-shrink: 0;
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,0,0,0.06);
+      border-radius: 999px;
+      padding: 6px 16px 6px 6px;
+      text-decoration: none;
+      color: #1a1a1a;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: background 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover { background: rgba(0,0,0,0.1); }
+
+    .nav-avatar {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #1a1a1a;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .nav.scrolled { padding: 16px 40px; }
+
+    .nav.scrolled .nav-inner {
+      max-width: 560px;
+      box-shadow: 0 4px 32px rgba(0,0,0,0.12);
+      padding: 8px;
+    }
+
     /* ── HERO ── */
     .hero {
       position: relative;
@@ -39,94 +160,28 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      padding-top: 80px;
     }
 
-    /* ── GRADIENT ORBS ── */
     .orb-wrap {
       position: absolute;
       inset: 0;
       pointer-events: none;
       z-index: 0;
+      overflow: hidden;
     }
 
-    .orb {
+    .blob-svg {
       position: absolute;
-      border-radius: 50%;
-      filter: blur(90px);
+      top: 50%; left: 50%;
+      width: 380px; height: 380px;
+      filter: blur(55px);
       opacity: 0;
-      animation: orbFadeIn 1.6s ease forwards;
+      transition: opacity 2.2s ease;
     }
 
-    .orb-1 {
-      width: 520px;
-      height: 420px;
-      background: radial-gradient(ellipse at center, rgba(0,200,112,0.45) 0%, rgba(0,200,112,0.08) 60%, transparent 80%);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -60%);
-      animation-name: orbFadeIn, drift1;
-      animation-duration: 1.6s, 18s;
-      animation-delay: 0s, 1.6s;
-      animation-timing-function: ease, ease-in-out;
-      animation-fill-mode: forwards, none;
-      animation-iteration-count: 1, infinite;
-    }
+    .blob-svg.visible { opacity: 1; }
 
-    .orb-2 {
-      width: 360px;
-      height: 300px;
-      background: radial-gradient(ellipse at center, rgba(0,200,112,0.20) 0%, transparent 70%);
-      top: 30%;
-      left: 35%;
-      animation-name: orbFadeIn, drift2;
-      animation-duration: 2s, 22s;
-      animation-delay: 0.4s, 2s;
-      animation-timing-function: ease, ease-in-out;
-      animation-fill-mode: forwards, none;
-      animation-iteration-count: 1, infinite;
-    }
-
-    .orb-3 {
-      width: 280px;
-      height: 260px;
-      background: radial-gradient(ellipse at center, rgba(0,200,112,0.12) 0%, transparent 70%);
-      bottom: 28%;
-      right: 30%;
-      animation-name: orbFadeIn, drift3;
-      animation-duration: 2.4s, 26s;
-      animation-delay: 0.6s, 2.4s;
-      animation-timing-function: ease, ease-in-out;
-      animation-fill-mode: forwards, none;
-      animation-iteration-count: 1, infinite;
-    }
-
-    @keyframes orbFadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
-
-    @keyframes drift1 {
-      0%   { transform: translate(-50%, -60%); }
-      33%  { transform: translate(-48%, -64%); }
-      66%  { transform: translate(-52%, -57%); }
-      100% { transform: translate(-50%, -60%); }
-    }
-
-    @keyframes drift2 {
-      0%   { transform: translate(0, 0); }
-      40%  { transform: translate(24px, -18px); }
-      75%  { transform: translate(-16px, 14px); }
-      100% { transform: translate(0, 0); }
-    }
-
-    @keyframes drift3 {
-      0%   { transform: translate(0, 0); }
-      35%  { transform: translate(-20px, 16px); }
-      70%  { transform: translate(18px, -12px); }
-      100% { transform: translate(0, 0); }
-    }
-
-    /* ── CONTENT ── */
     .hero-content {
       position: relative;
       z-index: 1;
@@ -134,27 +189,57 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0;
       padding: 0 24px;
+    }
+
+    .hero-label {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+      opacity: 0;
+      animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.3s forwards;
     }
 
     .hero-headline {
       font-family: 'Onest', sans-serif;
       font-weight: 700;
-      font-size: clamp(2.6rem, 6vw, 4.6rem);
+      font-size: clamp(2rem, 6vw, 4.6rem);
       line-height: 1.08;
       letter-spacing: -0.02em;
       color: var(--white);
-      margin-bottom: 24px;
+      margin-bottom: 16px;
       opacity: 0;
       transform: translateY(22px);
       animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.5s forwards;
     }
 
+    .hero-pills {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.9s forwards;
+    }
+
+    .hero-pills span {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 999px;
+      padding: 5px 14px;
+    }
+
+    .hero-pills span:nth-child(2) {
+      color: #98E6E1;
+      border-color: rgba(152,230,225,0.3);
+    }
+
     .hero-sub {
-      font-family: 'Inter', sans-serif;
-      font-weight: 400;
-      font-size: clamp(0.95rem, 1.8vw, 1.125rem);
+      font-size: clamp(0.9rem, 1.8vw, 1.125rem);
       line-height: 1.65;
       color: var(--text-secondary);
       max-width: 580px;
@@ -164,7 +249,6 @@
       animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.75s forwards;
     }
 
-    /* ── CTA BUTTON ── */
     .cta-btn {
       display: inline-flex;
       align-items: center;
@@ -175,7 +259,7 @@
       font-weight: 500;
       font-size: 0.95rem;
       text-decoration: none;
-      padding: 10px 22px 10px 10px;
+      padding: 8px 22px 8px 8px;
       border-radius: 999px;
       transition: transform 0.22s ease, box-shadow 0.22s ease;
       opacity: 0;
@@ -184,19 +268,35 @@
 
     .cta-btn:hover {
       transform: scale(1.04);
-      box-shadow: 0 8px 32px rgba(0,200,112,0.25);
+      box-shadow: 0 8px 32px rgba(0,200,112,0.3);
+    }
+
+    .process-card .cta-btn {
+      align-self: flex-start;
+      opacity: 1;
+      animation: none;
+    }
+
+    .whatido-cta-bar .cta-btn {
+      align-self: center;
+      opacity: 1;
+      animation: none;
+    }
+
+    .footer-cta-inner .cta-btn {
+      align-self: center;
+      opacity: 1;
+      animation: none;
     }
 
     .cta-avatar {
-      width: 38px;
-      height: 38px;
+      width: 38px; height: 38px;
       border-radius: 50%;
       object-fit: cover;
       display: block;
       flex-shrink: 0;
     }
 
-    /* ── CLIENTS ── */
     .clients {
       position: relative;
       z-index: 1;
@@ -204,7 +304,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: clamp(28px, 5vw, 64px);
+      gap: clamp(20px, 5vw, 64px);
       flex-wrap: wrap;
       padding: 0 32px;
       opacity: 0;
@@ -212,70 +312,1605 @@
     }
 
     .clients img {
-      height: 28px;
-      width: auto;
+      height: 28px; width: auto;
       object-fit: contain;
       opacity: 0.75;
       filter: brightness(0) invert(1);
       transition: opacity 0.2s ease;
     }
 
-    /* Peak Serum has colour so let's keep it */
-    .clients img.logo-peak {
-      filter: none;
-      opacity: 0.8;
-    }
-
-    .clients img:hover {
-      opacity: 1;
-    }
+    .clients img.logo-peak { filter: none; opacity: 0.85; }
+    .clients img:hover { opacity: 1; }
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(22px); }
       to   { opacity: 1; transform: translateY(0); }
     }
+
+    /* ── TICKER ── */
+    .ticker-wrap {
+      width: 100%;
+      overflow: hidden;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 14px 0;
+    }
+
+    .ticker-track {
+      display: flex;
+      gap: 48px;
+      width: max-content;
+      animation: ticker 40s linear infinite;
+    }
+
+    .ticker-track span {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.45);
+      white-space: nowrap;
+      letter-spacing: 0.02em;
+    }
+
+    .ticker-track span svg { flex-shrink: 0; opacity: 0.7; }
+    .ticker-wrap:hover .ticker-track { animation-play-state: paused; }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── PROBLEMS ── */
+    .problems {
+      padding: 120px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .problems-label-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 60px;
+    }
+
+    .problems-label {
+      font-size: 0.82rem;
+      color: #a8ffdd;
+      background: rgba(31,195,121,0.15);
+      border: 1px solid rgba(31,195,121,0.3);
+      border-radius: 999px;
+      padding: 6px 20px;
+    }
+
+    .problems-grid {
+      background: linear-gradient(135deg, rgba(31,195,121,0.15) 0%, rgba(152,230,225,0.08) 100%);
+      border: 1px solid rgba(31,195,121,0.2);
+      border-radius: 24px;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      animation: gridGradientShift 8s ease-in-out infinite;
+    }
+
+    @keyframes gridGradientShift {
+      0%, 100% { background: linear-gradient(135deg, rgba(31,195,121,0.15) 0%, rgba(152,230,225,0.08) 100%); }
+      50%      { background: linear-gradient(135deg, rgba(152,230,225,0.12) 0%, rgba(31,195,121,0.18) 100%); }
+    }
+
+    .problem-card {
+      background: rgba(31,195,121,0.08);
+      border: 1px solid rgba(31,195,121,0.15);
+      border-radius: 16px;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .problem-card:hover {
+      background: rgba(255,60,80,0.12);
+      border-color: rgba(255,80,100,0.35);
+    }
+
+    .problem-card:hover .problem-tag {
+      color: #ff9aaa;
+      background: rgba(255,60,80,0.2);
+      border-color: rgba(255,80,100,0.4);
+    }
+
+    .problem-tag {
+      display: inline-block;
+      align-self: flex-start;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: #a8ffdd;
+      background: rgba(31,195,121,0.2);
+      border: 1px solid rgba(31,195,121,0.35);
+      border-radius: 999px;
+      padding: 4px 12px;
+    }
+
+    .problem-title {
+      font-family: 'Onest', sans-serif;
+      font-weight: 600;
+      font-size: 1.05rem;
+      line-height: 1.3;
+      color: var(--white);
+    }
+
+    .problem-desc {
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .problem-cta-card {
+      background: rgba(152,230,225,0.1);
+      border-color: rgba(152,230,225,0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 16px;
+    }
+
+    .problem-cta-card .service-cta { align-self: center; }
+
+    .problem-cta-headline {
+      font-family: 'Onest', sans-serif;
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: var(--white);
+    }
+
+    .problem-cta-sub {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* ── SERVICES ── */
+    .services-outer { position: relative; width: 100%; }
+
+    .services {
+      position: relative;
+      padding: 120px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .services-blobs {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .s-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.45;
+    }
+
+    .s-blob-1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(ellipse, #1FC379 0%, transparent 70%);
+      top: 0; right: -60px;
+      animation: sbDrift1 18s ease-in-out infinite;
+    }
+
+    .s-blob-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(ellipse, #98E6E1 0%, transparent 70%);
+      bottom: 10%; left: -60px;
+      animation: sbDrift2 22s ease-in-out infinite;
+    }
+
+    @keyframes sbDrift1 {
+      0%, 100% { transform: translate(0,0); }
+      40%      { transform: translate(-30px,40px); }
+      70%      { transform: translate(20px,-30px); }
+    }
+
+    @keyframes sbDrift2 {
+      0%, 100% { transform: translate(0,0); }
+      35%      { transform: translate(30px,-40px); }
+      70%      { transform: translate(-20px,30px); }
+    }
+
+    .services-label-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .services-label {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.5);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 999px;
+      padding: 6px 20px;
+    }
+
+    .service-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      margin-bottom: 120px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .service-row:last-child { margin-bottom: 0; }
+
+    .service-img-wrap {
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+    }
+
+    .service-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+
+    .service-img-wrap:hover .service-img { transform: scale(1.03); }
+
+    .service-content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .service-tag {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: #1a1a1a;
+      background: #98E6E1;
+      border-radius: 999px;
+      padding: 5px 14px;
+      margin-bottom: 20px;
+      align-self: flex-start;
+    }
+
+    .service-title {
+      font-family: 'Onest', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .service-desc {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+
+    .service-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+
+    .service-list li {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      padding-left: 16px;
+      position: relative;
+    }
+
+    .service-list li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: #1FC379;
+      font-size: 1.2rem;
+      line-height: 1.2;
+    }
+
+    .service-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 0.88rem;
+      text-decoration: none;
+      padding: 8px 20px 8px 8px;
+      border-radius: 999px;
+      align-self: flex-start;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .service-cta:hover {
+      background: rgba(255,255,255,0.13);
+      border-color: rgba(255,255,255,0.25);
+    }
+
+    .service-cta-avatar {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    /* ── WHAT I DO ── */
+    .whatido {
+      padding: 120px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .whatido-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      margin-bottom: 40px;
+    }
+
+    .whatido-left {
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+    }
+
+    .whatido-photo {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    .whatido-right {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .whatido-label {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: #1a1a1a;
+      background: #98E6E1;
+      border-radius: 999px;
+      padding: 5px 14px;
+      margin-bottom: 20px;
+      align-self: flex-start;
+    }
+
+    .whatido-title {
+      font-family: 'Onest', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .whatido-desc {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+    }
+
+    .whatido-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      background: rgba(31,195,121,0.06);
+      border: 1px solid rgba(31,195,121,0.15);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .whatido-tags span {
+      font-size: 0.8rem;
+      color: #a8ffdd;
+      background: rgba(31,195,121,0.15);
+      border: 1px solid rgba(31,195,121,0.25);
+      border-radius: 999px;
+      padding: 6px 14px;
+      transition: background 0.2s ease, border-color 0.2s ease;
+      cursor: default;
+    }
+
+    .whatido-tags span:hover {
+      background: rgba(31,195,121,0.28);
+      border-color: rgba(31,195,121,0.45);
+    }
+
+    .whatido-cta-bar {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 48px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+    }
+
+    .whatido-cta-title {
+      font-family: 'Onest', sans-serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: var(--white);
+    }
+
+    .whatido-cta-sub {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    /* ── PROCESS ── */
+    .process {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      padding: 120px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+      align-items: start;
+    }
+
+    .process-left { position: relative; }
+
+    .process-sticky {
+      position: sticky;
+      top: 120px;
+    }
+
+    .process-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 48px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .process-card-title {
+      font-family: 'Onest', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--white);
+    }
+
+    .process-card-desc {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    .process-right {
+      position: relative;
+      padding-left: 40px;
+    }
+
+    .process-line-wrap {
+      position: absolute;
+      left: 0; top: 12px; bottom: 12px;
+      width: 2px;
+      background: transparent;
+    }
+
+    .process-line {
+      width: 2px;
+      height: 0;
+      background: linear-gradient(to bottom, #1FC379, #98E6E1);
+      transition: height 0.05s linear;
+      border-radius: 2px;
+    }
+
+    .process-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 80px;
+    }
+
+    .process-step {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .process-step.visible { opacity: 1; transform: translateY(0); }
+
+    .process-dot {
+      position: absolute;
+      left: -46px; top: 10px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: #1FC379;
+      border: 2px solid var(--black);
+      box-shadow: 0 0 0 3px rgba(31,195,121,0.3);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .process-step.visible .process-dot {
+      box-shadow: 0 0 0 5px rgba(31,195,121,0.2);
+    }
+
+    .process-tag {
+      display: inline-block;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: #1a1a1a;
+      background: #98E6E1;
+      border-radius: 999px;
+      padding: 5px 16px;
+      align-self: flex-start;
+    }
+
+    .process-step-desc {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials {
+      padding: 120px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .testimonials-title {
+      font-family: 'Onest', sans-serif;
+      font-weight: 400;
+      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+      color: var(--white);
+      text-align: center;
+      margin-bottom: 48px;
+      letter-spacing: -0.01em;
+    }
+
+    .testimonials-slider {
+      width: 100%;
+      overflow: hidden;
+      border-radius: 20px;
+    }
+
+    .testimonials-track {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
+    }
+
+    .testimonial-slide { min-width: 100%; }
+
+    .testimonial-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 64px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      min-height: 360px;
+      justify-content: space-between;
+    }
+
+    .testimonial-quote,
+    .testimonial-quote-cont {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 16px;
+    }
+
+    .testimonial-avatar {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      flex-shrink: 0;
+    }
+
+    .testimonial-avatar-delphine { object-position: center 20%; }
+
+    .testimonial-name {
+      font-family: 'Onest', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--white);
+    }
+
+    .testimonial-role {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .testimonials-dots {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .t-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.3);
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+      padding: 0;
+    }
+
+    .t-dot.active {
+      background: #1FC379;
+      border-color: #1FC379;
+      transform: scale(1.2);
+    }
+
+    /* ── FAQ ── */
+    .faq {
+      padding: 120px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .faq-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .faq-left {
+      position: sticky;
+      top: 120px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .faq-title {
+      font-family: 'Onest', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--white);
+    }
+
+    .faq-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .faq-cta-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: flex-start;
+      margin-top: 16px;
+    }
+
+    .faq-cta-text {
+      font-family: 'Onest', sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--white);
+      text-align: center;
+      width: 100%;
+      line-height: 1.3;
+    }
+
+    .faq-cta-card .service-cta {
+      align-self: center;
+      background: var(--white);
+      color: var(--black);
+      border-color: transparent;
+    }
+
+    .faq-cta-card .service-cta:hover { background: rgba(255,255,255,0.9); }
+
+    .faq-right { display: flex; flex-direction: column; }
+
+    .faq-item { border-bottom: 1px solid rgba(255,255,255,0.08); }
+
+    .faq-question {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 28px 0;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .faq-question span:first-child {
+      font-family: 'Onest', sans-serif;
+      font-weight: 600;
+      font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+      color: var(--white);
+      line-height: 1.3;
+    }
+
+    .faq-icon {
+      font-size: 1.4rem;
+      color: var(--white);
+      flex-shrink: 0;
+      transition: transform 0.3s ease, color 0.2s ease;
+      font-weight: 300;
+      line-height: 1;
+      width: 24px;
+      text-align: center;
+    }
+
+    .faq-item.open .faq-icon {
+      color: #1FC379;
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.22,1,0.36,1);
+    }
+
+    .faq-answer p {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: var(--text-secondary);
+      padding-bottom: 28px;
+    }
+
+    .faq-item.open .faq-answer { max-height: 300px; }
+
+    /* ── FOOTER CTA ── */
+    .footer-cta {
+      padding: 120px 80px 0;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-cta-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 24px;
+      margin-bottom: 80px;
+    }
+
+    .footer-cta-headline {
+      font-family: 'Onest', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--white);
+    }
+
+    .footer-cta-sub {
+      font-size: 1rem;
+      color: var(--text-secondary);
+    }
+
+    .footer-cta-contact {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 48px 80px;
+      width: 100%;
+      max-width: 640px;
+    }
+
+    .footer-email {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.1rem;
+      color: var(--white);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-email:hover { color: #1FC379; }
+
+    /* ── FOOTER BAR ── */
+    .footer-bar {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 24px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-bar p {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .footer-linkedin {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: background 0.2s ease, border-color 0.2s ease;
+      text-decoration: none;
+    }
+
+    .footer-linkedin:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.2);
+    }
+
+    .footer-linkedin svg {
+      width: 16px; height: 16px;
+      fill: rgba(255,255,255,0.6);
+    }
+
+    /* ── MOBILE RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .nav { padding: 12px 20px; }
+      .nav.scrolled { padding: 12px 20px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+
+      .nav-links.mobile-open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(245,240,238,0.98);
+        backdrop-filter: blur(20px);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+      }
+
+      .nav-links.mobile-open a {
+        font-size: 1.4rem;
+        font-weight: 600;
+      }
+
+      .mobile-close {
+        position: absolute;
+        top: 24px; right: 24px;
+        background: none;
+        border: none;
+        font-size: 1.8rem;
+        color: #1a1a1a;
+        cursor: pointer;
+      }
+
+      .hero { padding-top: 100px; }
+
+      .clients { gap: 20px; }
+      .clients img { height: 20px; }
+      .clients img.logo-peak { height: 32px !important; }
+      .clients img[alt="Activeloop"] { height: 28px !important; }
+
+      .problems { padding: 80px 24px; }
+      .problems-grid { grid-template-columns: 1fr 1fr; }
+
+      .services { padding: 80px 24px; }
+      .service-row {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        margin-bottom: 80px;
+      }
+
+      .whatido { padding: 80px 24px; }
+      .whatido-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .whatido-left { aspect-ratio: 4/3; }
+
+      .process {
+        grid-template-columns: 1fr;
+        padding: 80px 24px;
+        gap: 60px;
+      }
+      .process-sticky { position: relative; top: 0; }
+      .process-right { padding-left: 32px; }
+
+      .testimonials { padding: 80px 24px; }
+      .testimonial-card { padding: 40px 28px; }
+
+      .faq { padding: 80px 24px; }
+      .faq-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .faq-left { position: relative; top: 0; }
+
+      .footer-cta { padding: 80px 24px 0; }
+      .footer-cta-contact { padding: 40px 28px; }
+      .footer-cta-headline { font-size: clamp(1.8rem, 8vw, 3rem); }
+
+      .footer-bar {
+        padding: 24px;
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero-headline { font-size: clamp(1.8rem, 8vw, 3rem); }
+      .problems-grid { grid-template-columns: 1fr; }
+      .testimonial-card { padding: 32px 20px; min-height: auto; }
+      .testimonial-quote, .testimonial-quote-cont { font-size: 0.9rem; }
+      .whatido-cta-bar { padding: 32px 20px; }
+      .process-card { padding: 32px 24px; }
+    }
   </style>
 </head>
 <body>
 
-<section class="hero">
-
-  <!-- Animated gradient orbs -->
-  <div class="orb-wrap">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
+<nav class="nav" id="main-nav">
+  <div class="nav-inner">
+    <div class="nav-links" id="navLinks">
+      <button class="mobile-close" id="navClose" style="display:none">✕</button>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+    </div>
+    <div class="nav-end">
+      <a href="https://cal.com/christian-digitallee/15min" class="nav-cta" target="_blank" rel="noopener">
+        <img src="Christian_Lee_logo_green_background.png" alt="Christian Lee" class="nav-avatar" />
+        <span>Book a call</span>
+      </a>
+      <button class="nav-hamburger" id="navHamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
+</nav>
 
-  <!-- Main copy -->
+<section class="hero">
+  <div class="orb-wrap">
+    <svg class="blob-svg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="blobGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#1FC379" />
+          <stop offset="100%" stop-color="#98E6E1" />
+        </linearGradient>
+      </defs>
+      <path id="blob1" d="M250,60 C380,20 500,80 470,220 C440,360 320,460 160,420 C0,380 20,200 80,100 C140,0 120,100 250,60Z" fill="url(#blobGrad)" opacity="1" />
+      <path id="blob2" d="M280,50 C430,10 510,130 470,290 C430,450 260,490 90,430 C-80,370 20,160 110,60 C200,-40 130,90 280,50Z" fill="#98E6E1" opacity="0.6" />
+    </svg>
+  </div>
   <div class="hero-content">
-    <h1 class="hero-headline">More capacity. Less chaos.</h1>
-    <p class="hero-sub">
-      Freelance project manager for agencies and brands. I embed fast, create
-      clarity, and make sure nothing falls through the cracks — so you don't have to.
-    </p>
-
-    <!-- CTA -->
+    <p class="hero-label">Christian Lee</p>
+    <h1 class="hero-headline">Result-Driven Project Manager</h1>
+    <div class="hero-pills">
+      <span>Events & Experiential</span>
+      <span>Digital Projects & Marketing</span>
+      <span>+35 projects worldwide</span>
+    </div>
+    <p class="hero-sub">Freelance project manager for agencies and brands. I embed fast, create clarity, and make sure nothing falls through the cracks — so you don't have to.</p>
     <a href="https://cal.com/christian-digitallee/15min" class="cta-btn" target="_blank" rel="noopener">
-      <img
-        src="Christian_Lee_logo_green_background.png"
-        alt="Christian Lee"
-        class="cta-avatar"
-      />
+      <img src="Christian_Lee_logo_green_background.png" alt="Christian Lee" class="cta-avatar" />
       Book a call
     </a>
   </div>
-
-  <!-- Client logos -->
   <div class="clients">
-    <img src="pasqal_logo_1.png"                          alt="Pasqal" />
-    <img src="Peak_Logo__1__1.png"                        alt="Peak Serum" class="logo-peak" />
-    <img src="Group.png"                                  alt="Huawei" />
-    <img src="logo-bemyapp-white_1.png"                   alt="BEMYAPP" />
-    <img src="ActiveLoop-Logo_1__Vectorized__1.png"       alt="Activeloop" />
+    <img src="pasqal_logo_1.png" alt="Pasqal" />
+    <img src="Peak_Logo__1__1.png" alt="Peak Serum" class="logo-peak" style="height:42px;" />
+    <img src="Group.png" alt="Huawei" />
+    <img src="logo-bemyapp-white_1.png" alt="BEMYAPP" />
+    <img src="ActiveLoop-Logo_1__Vectorized__1.png" alt="Activeloop" style="height:38px;" />
   </div>
-
 </section>
+
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#1FC379" stroke-width="1.5"/><circle cx="7" cy="7" r="2" fill="#1FC379"/></svg> RetrieveX (GenAI at scale) | Activeloop | San Francisco | 2024</span>
+    <span><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#1FC379" stroke-width="1.5"/><circle cx="7" cy="7" r="2" fill="#1FC379"/></svg> NextGenAI | Saudi Gov. | Riyadh | 2024</span>
+    <span><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#1FC379" stroke-width="1.5"/><circle cx="7" cy="7" r="2" fill="#1FC379"/></svg> VivaTech | Orange | Paris | 2023</span>
+    <span><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#1FC379" stroke-width="1.5"/><circle cx="7" cy="7" r="2" fill="#1FC379"/></svg> Xylem Innovation | Worldwide | 2024</span>
+    <span><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#1FC379" stroke-width="1.5"/><circle cx="7" cy="7" r="2" fill="#1FC379"/></svg> [Re]Gen Quantum | Pasqal | Worldwide | 2023</span>
+    <span><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#1FC379" stroke-width="1.5"/><circle cx="7" cy="7" r="2" fill="#1FC379"/></svg> Pathfinders | Rio Tinto | Perth | 2022</span>
+    <span><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#1FC379" stroke-width="1.5"/><circle cx="7" cy="7" r="2" fill="#1FC379"/></svg> TechArena | Huawei | Sweden & Poland | 2021–2025</span>
+    <span><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#1FC379" stroke-width="1.5"/><circle cx="7" cy="7" r="2" fill="#1FC379"/></svg> RetrieveX (GenAI at scale) | Activeloop | San Francisco | 2024</span>
+    <span><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#1FC379" stroke-width="1.5"/><circle cx="7" cy="7" r="2" fill="#1FC379"/></svg> NextGenAI | Saudi Gov. | Riyadh | 2024</span>
+    <span><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#1FC379" stroke-width="1.5"/><circle cx="7" cy="7" r="2" fill="#1FC379"/></svg> VivaTech | Orange | Paris | 2023</span>
+    <span><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#1FC379" stroke-width="1.5"/><circle cx="7" cy="7" r="2" fill="#1FC379"/></svg> Xylem Innovation | Worldwide | 2024</span>
+    <span><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#1FC379" stroke-width="1.5"/><circle cx="7" cy="7" r="2" fill="#1FC379"/></svg> [Re]Gen Quantum | Pasqal | Worldwide | 2023</span>
+    <span><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#1FC379" stroke-width="1.5"/><circle cx="7" cy="7" r="2" fill="#1FC379"/></svg> Pathfinders | Rio Tinto | Perth | 2022</span>
+    <span><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#1FC379" stroke-width="1.5"/><circle cx="7" cy="7" r="2" fill="#1FC379"/></svg> TechArena | Huawei | Sweden & Poland | 2021–2025</span>
+  </div>
+</div>
+
+<!-- ── PROBLEMS ── -->
+<section class="problems" id="problems">
+  <div class="problems-label-wrap">
+    <span class="problems-label">Does this sound familiar?</span>
+  </div>
+  <div class="problems-grid">
+    <div class="problem-card">
+      <span class="problem-tag">No-tracking</span>
+      <h3 class="problem-title">Briefs, Reviews & Updates</h3>
+      <p class="problem-desc">are lost in undocumented email threads and files</p>
+    </div>
+    <div class="problem-card">
+      <span class="problem-tag">Time-Pressure</span>
+      <h3 class="problem-title">Your team is losing precious time</h3>
+      <p class="problem-desc">on emails, recovering information and repetitive tasks</p>
+    </div>
+    <div class="problem-card">
+      <span class="problem-tag">Slipping Deadlines</span>
+      <h3 class="problem-title">There's no clear overview</h3>
+      <p class="problem-desc">on the priorities, deadlines and milestones</p>
+    </div>
+    <div class="problem-card">
+      <span class="problem-tag">Limited Capacity</span>
+      <h3 class="problem-title">You're passing on opportunities</h3>
+      <p class="problem-desc">Because your team is already at full capacity</p>
+    </div>
+    <div class="problem-card">
+      <span class="problem-tag">No room for change</span>
+      <h3 class="problem-title">Improved efficiency is a pipe dream</h3>
+      <p class="problem-desc">when there's no time to implement new processes</p>
+    </div>
+    <div class="problem-card">
+      <span class="problem-tag">Poor deployment</span>
+      <h3 class="problem-title">Senior team members are managing not leading</h3>
+      <p class="problem-desc">when they should focus on strategy not production</p>
+    </div>
+    <div class="problem-card">
+      <span class="problem-tag">Need for dedicated role</span>
+      <h3 class="problem-title">You have the dream team</h3>
+      <p class="problem-desc">You're just missing someone to keep everything on track</p>
+    </div>
+    <div class="problem-card problem-cta-card">
+      <p class="problem-cta-headline">Sound familiar?</p>
+      <p class="problem-cta-sub">Let's have a call</p>
+      <a href="https://cal.com/christian-digitallee/15min" class="service-cta" target="_blank" rel="noopener">
+        <img src="Christian_Lee_logo_green_background.png" alt="Christian Lee" class="service-cta-avatar" />
+        Book a call
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICES ── -->
+<div class="services-outer">
+  <section class="services" id="services">
+    <div class="services-blobs">
+      <div class="s-blob s-blob-1"></div>
+      <div class="s-blob s-blob-2"></div>
+    </div>
+    <div class="services-label-wrap">
+      <span class="services-label">Management Services</span>
+    </div>
+    <div class="service-row">
+      <div class="service-img-wrap">
+        <img src="christian-lee-event-pm.jpg" alt="Event Management" class="service-img" />
+      </div>
+      <div class="service-content">
+        <span class="service-tag">Event Management</span>
+        <h2 class="service-title">End-to-end event delivery</h2>
+        <p class="service-desc">Full delivery ownership from first brief to final wrap — venues, suppliers, timelines, on-site logistics, and client communication handled completely. Barcelona-based, trilingual, with events delivered across Europe, the Middle East, Africa, and the Americas.</p>
+        <ul class="service-list">
+          <li>Venue sourcing and supplier management</li>
+          <li>Full on-site logistics and execution</li>
+          <li>Client and stakeholder communication</li>
+          <li>Multilingual team coordination (EN/FR/ES)</li>
+          <li>Post-event reporting and recommendations</li>
+        </ul>
+        <a href="https://cal.com/christian-digitallee/15min" class="service-cta" target="_blank" rel="noopener">
+          <img src="Christian_Lee_logo_green_background.png" alt="Christian Lee" class="service-cta-avatar" />
+          Organising an event? Let's chat
+        </a>
+      </div>
+    </div>
+    <div class="service-row">
+      <div class="service-content">
+        <span class="service-tag">Digital Project Management</span>
+        <h2 class="service-title">Full project ownership from brief to final report</h2>
+        <p class="service-desc">Brief to final report, fully owned. Timelines, task management, supplier coordination, and team accountability — all handled so your best people stay focused on what only they can do.</p>
+        <ul class="service-list">
+          <li>Brief writing and scope documentation</li>
+          <li>Timeline and task management</li>
+          <li>Supplier and specialist coordination</li>
+          <li>Client updates and reporting</li>
+          <li>Post-project close-out</li>
+        </ul>
+        <a href="https://cal.com/christian-digitallee/15min" class="service-cta" target="_blank" rel="noopener">
+          <img src="Christian_Lee_logo_green_background.png" alt="Christian Lee" class="service-cta-avatar" />
+          Upcoming rush? Let's chat
+        </a>
+      </div>
+      <div class="service-img-wrap">
+        <img src="digital-project-management.png" alt="Digital Project Management" class="service-img" />
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ── WHAT I DO ── -->
+<section class="whatido" id="about">
+  <div class="whatido-inner">
+    <div class="whatido-left">
+      <img src="christian-lee-pm-on-stage.webp" alt="Christian Lee" class="whatido-photo" />
+    </div>
+    <div class="whatido-right">
+      <span class="whatido-label">What I do</span>
+      <h2 class="whatido-title">I take the project off your plate. Completely.</h2>
+      <p class="whatido-desc">I work with agencies, event companies, and marketing teams as an embedded freelance PM. That means I handle:</p>
+      <div class="whatido-tags">
+        <span>Client relationships</span>
+        <span>Team coordination</span>
+        <span>Supplier & specialist sourcing</span>
+        <span>Reporting & close-out</span>
+        <span>Deadline management</span>
+        <span>On-site event management</span>
+        <span>Local logistics in Barcelona (and worldwide)</span>
+        <span>Budget tracking</span>
+        <span>Partner sourcing</span>
+        <span>Multilingual delivery</span>
+        <span>Brief writing</span>
+        <span>Sprint delivery</span>
+        <span>Timeline management</span>
+        <span>Process implementation</span>
+        <span>Logistics management</span>
+      </div>
+    </div>
+  </div>
+  <div class="whatido-cta-bar">
+    <p class="whatido-cta-title">15 minutes Free consultation & Quick wins</p>
+    <p class="whatido-cta-sub">You'll walk away with fresh ideas, a renewed energy and clear processes.</p>
+    <a href="https://cal.com/christian-digitallee/15min" class="cta-btn" target="_blank" rel="noopener">
+      <img src="Christian_Lee_logo_green_background.png" alt="Christian Lee" class="cta-avatar" />
+      Book a call
+    </a>
+  </div>
+</section>
+
+<!-- ── PROCESS ── -->
+<section class="process" id="process">
+  <div class="process-left">
+    <div class="process-sticky">
+      <div class="process-card">
+        <h2 class="process-card-title">A process built for success</h2>
+        <p class="process-card-desc">Structured, transparent, adaptable, and built to withstand rushes and the unexpected changes.</p>
+        <a href="https://cal.com/christian-digitallee/15min" class="cta-btn" target="_blank" rel="noopener">
+          <img src="Christian_Lee_logo_green_background.png" alt="Christian Lee" class="cta-avatar" />
+          Book a call
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="process-right">
+    <div class="process-line-wrap">
+      <div class="process-line" id="processLine"></div>
+    </div>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="process-dot"></div>
+        <div class="process-step-content">
+          <span class="process-tag">Introductions</span>
+          <p class="process-step-desc">We'll have a structured conversation about the project, deadlines, milestones and pitfalls.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-dot"></div>
+        <div class="process-step-content">
+          <span class="process-tag">Proposal</span>
+          <p class="process-step-desc">I'll send a clear scope, timeline and rate within 24 hours. No surprises.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-dot"></div>
+        <div class="process-step-content">
+          <span class="process-tag">Alignment</span>
+          <p class="process-step-desc">One onboarding session. Meet the team, check the tools and map out the project scope.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-dot"></div>
+        <div class="process-step-content">
+          <span class="process-tag">Delivery</span>
+          <p class="process-step-desc">From brief to final report. I'll streamline the processes from content, conversations, production, and reports.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section class="testimonials">
+  <h2 class="testimonials-title">I loved working with them, here's what they thought:</h2>
+  <div class="testimonials-slider">
+    <div class="testimonials-track" id="testimonialsTrack">
+      <div class="testimonial-slide">
+        <div class="testimonial-card">
+          <p class="testimonial-quote">"I've had the opportunity to work with Christian for the past five years and have seen him grow from a talented content writer into a highly capable project manager. He is reliable, results-driven, and consistently delivers with professionalism and precision. Christian is a valuable asset to any team, and I strongly recommend him :)"</p>
+          <div class="testimonial-author">
+            <img src="adelaide-review-image.jpeg" alt="Adélaïde Hervagault" class="testimonial-avatar" />
+            <div>
+              <p class="testimonial-name">Adélaïde Hervagault</p>
+              <p class="testimonial-role">Head of Operations at BeMyApp</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-slide">
+        <div class="testimonial-card">
+          <p class="testimonial-quote">"It was an absolute pleasure working with Christian during Huawei Sweden Tech Arena 2025! From the start, his energetic and proactive approach made him a standout project manager.</p>
+          <p class="testimonial-quote-cont">Christian's ability to manage and navigate challenges, especially during high-pressure moments, was invaluable. He and his team's dedication to the event's success was evident at every step, ensuring the event ran smoothly. His energy brought a dynamic and fun atmosphere to the team.</p>
+          <p class="testimonial-quote-cont">I highly recommend Christian for any future projects. His professionalism, problem-solving skills, and positive attitude make him a true asset to any team!"</p>
+          <div class="testimonial-author">
+            <img src="xinyuan-huawei-review.jpeg" alt="Xinyuan Xu" class="testimonial-avatar" />
+            <div>
+              <p class="testimonial-name">Xinyuan Xu</p>
+              <p class="testimonial-role">HR Recruitment Specialist, Huawei Sweden</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-slide">
+        <div class="testimonial-card">
+          <p class="testimonial-quote">"I had the pleasure of working with Christian on a high level project on innovation, and I can confidently say he was instrumental to the success. His agility and ability to navigate changing priorities kept us on track. What truly set Christian apart was how he managed the different individuals on the team. He had a natural ability to engage and motivate both our project team and on-the-ground staff, creating an environment where everyone felt valued and empowered to do their best work. His leadership style is both collaborative and inspiring — he brings out the best in those around him. Equally importantly, he was a joy and pleasure to work with!"</p>
+          <div class="testimonial-author">
+            <img src="fredrika-testimonial.jpeg" alt="Fredrika Rylander" class="testimonial-avatar" />
+            <div>
+              <p class="testimonial-name">Fredrika Rylander</p>
+              <p class="testimonial-role">Executive Leadership Coach</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-slide">
+        <div class="testimonial-card">
+          <p class="testimonial-quote">"Très solaire et professionnel, c'est très agréable de travailler avec Christian. Il dirige et motive parfaitement son équipe, surtout dans les moments de forte pression. Toujours créatif et force de proposition, j'ai collaboré avec lui pendant trois ans et ne peux que le recommander chaleureusement !"</p>
+          <div class="testimonial-author">
+            <img src="delphine-testimonial.png" alt="Delphine Brossier" class="testimonial-avatar testimonial-avatar-delphine" />
+            <div>
+              <p class="testimonial-name">Delphine Brossier</p>
+              <p class="testimonial-role">Graphiste et Motion Designer</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="testimonials-dots" id="testimonialsDots">
+    <button class="t-dot" data-index="0"></button>
+    <button class="t-dot" data-index="1"></button>
+    <button class="t-dot" data-index="2"></button>
+    <button class="t-dot" data-index="3"></button>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section class="faq">
+  <div class="faq-inner">
+    <div class="faq-left">
+      <h2 class="faq-title">Questions about our collaboration</h2>
+      <p class="faq-subtitle">Everything you need to know before starting.</p>
+      <div class="faq-cta-card">
+        <p class="faq-cta-text">Question not answered?</p>
+        <a href="https://cal.com/christian-digitallee/15min" class="service-cta" target="_blank" rel="noopener">
+          <img src="Christian_Lee_logo_green_background.png" alt="Christian Lee" class="service-cta-avatar" />
+          Contact me
+        </a>
+      </div>
+    </div>
+    <div class="faq-right">
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>How quickly can you get up to speed?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Within the first week. I ask the right questions on day one, plug into your existing tools and workflows, and start taking weight off the team immediately. No six-week ramp-up.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>We already have a project manager — why would we need you?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Most clients bring me in when their PM is already at capacity and a new project lands. I cover the overflow so your internal PM stays focused on what they're already running, not stretched across two things at once.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>How is this different from hiring a full-time PM?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>No salary, no benefits, no notice period, no long-term commitment. You pay for the days you need and stop when the project ends. Most clients find it's significantly cheaper than a full-time hire for the output they get.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>Do you work on-site or remotely?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Both. For digital and marketing projects I work remotely and integrate into your tools. For events I'm on-site wherever you need me — I've delivered projects across Europe, the Middle East, Africa, and the Americas.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>What industries and project types do you specialise in?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Two main areas: live events and experiential (brand activations, corporate summits, product launches) and digital project management (campaigns, product launches, ongoing agency overflow). I've worked with tech, luxury, B2B, and public sector clients.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>How do you handle scope creep?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Head on. I document scope clearly from day one and flag any additions immediately with a clear cost and time implication. Nothing gets added silently — every change is visible and agreed before it happens.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          <span>What does the engagement actually look like day to day?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>You get a dedicated point of contact who owns the project completely. Regular updates on your terms — daily, weekly, whatever works. I handle the calls, the chasing, the documentation, and the decisions so you don't have to.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER CTA ── -->
+<div class="footer-cta">
+  <div class="footer-cta-inner">
+    <h2 class="footer-cta-headline">Big projects.<br>Clean execution.</h2>
+    <p class="footer-cta-sub">Let's make yours a success.</p>
+    <div class="footer-cta-contact">
+      <a href="mailto:christian@itsdigitallee.com" class="footer-email">christian@itsdigitallee.com</a>
+      <a href="https://cal.com/christian-digitallee/15min" class="cta-btn" target="_blank" rel="noopener">
+        <img src="Christian_Lee_logo_green_background.png" alt="Christian Lee" class="cta-avatar" />
+        Book a call
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER BAR ── -->
+<footer class="footer-bar">
+  <p>© 2026 Christian Lee — Freelance Project Manager · Barcelona</p>
+  <a href="https://www.linkedin.com/in/itsdigitallee/" class="footer-linkedin" target="_blank" rel="noopener" aria-label="LinkedIn">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+    </svg>
+  </a>
+</footer>
+
+<script>
+  // Blob animation
+  const blob1 = document.getElementById('blob1');
+  const blob2 = document.getElementById('blob2');
+  const svgEl = document.querySelector('.blob-svg');
+
+  setTimeout(() => svgEl.classList.add('visible'), 300);
+
+  const shapes1 = [
+    "M250,60 C380,20 500,80 470,220 C440,360 320,460 160,420 C0,380 20,200 80,100 C140,0 120,100 250,60Z",
+    "M300,40 C450,10 520,120 480,280 C440,440 280,480 120,430 C-40,380 10,180 90,80 C170,-20 150,70 300,40Z",
+    "M200,80 C350,10 490,100 460,260 C430,420 260,470 100,420 C-60,370 30,170 100,70 C170,-30 50,150 200,80Z",
+  ];
+
+  const shapes2 = [
+    "M280,50 C430,10 510,130 470,290 C430,450 260,490 90,430 C-80,370 20,160 110,60 C200,-40 130,90 280,50Z",
+    "M230,70 C390,20 500,140 460,300 C420,460 240,500 70,440 C-100,380 15,150 100,50 C185,-50 70,120 230,70Z",
+    "M320,30 C470,0 530,140 485,310 C440,480 250,510 80,450 C-90,390 10,170 105,55 C200,-60 170,60 320,30Z",
+  ];
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function easeInOut(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+  function parsePath(d) { return d.match(/-?\d+\.?\d*/g).map(Number); }
+
+  const template1 = shapes1[0];
+  const template2 = shapes2[0];
+
+  function rebuildPath(template, nums) {
+    let i = 0;
+    return template.replace(/-?\d+\.?\d*/g, () => Math.round(nums[i++]));
+  }
+
+  const parsed1 = shapes1.map(parsePath);
+  const parsed2 = shapes2.map(parsePath);
+
+  function interpolate(parsed, t) {
+    const total = parsed.length;
+    const scaled = t * total;
+    const i = Math.floor(scaled) % total;
+    const j = (i + 1) % total;
+    const frac = easeInOut(scaled - Math.floor(scaled));
+    return parsed[i].map((v, k) => lerp(v, parsed[j][k], frac));
+  }
+
+  const waypoints = [
+    { x:0, y:0, r:0 }, { x:-70, y:0, r:-8 },
+    { x:-70, y:-80, r:-16 }, { x:10, y:-80, r:0 },
+    { x:10, y:-10, r:8 }, { x:0, y:0, r:0 },
+  ];
+
+  const CYCLE = 12000;
+
+  function getWaypoint(ts) {
+    const progress = (ts % CYCLE) / CYCLE;
+    const total = waypoints.length - 1;
+    const scaled = progress * total;
+    const i = Math.min(Math.floor(scaled), total - 1);
+    const j = i + 1;
+    const frac = easeInOut(scaled - i);
+    return {
+      x: lerp(waypoints[i].x, waypoints[j].x, frac),
+      y: lerp(waypoints[i].y, waypoints[j].y, frac),
+      r: lerp(waypoints[i].r, waypoints[j].r, frac),
+    };
+  }
+
+  let t1 = 0, t2 = 0.4;
+  const speed1 = 0.0008, speed2 = 0.0005;
+
+  function tick(ts) {
+    t1 = (t1 + speed1) % 1;
+    t2 = (t2 + speed2) % 1;
+    blob1.setAttribute('d', rebuildPath(template1, interpolate(parsed1, t1)));
+    blob2.setAttribute('d', rebuildPath(template2, interpolate(parsed2, t2)));
+    const { x, y, r } = getWaypoint(ts);
+    svgEl.style.transform = `translate(calc(-50% + ${x}px), calc(-62% + ${y}px)) rotate(${r}deg)`;
+    svgEl.style.opacity = 0.55 + Math.sin(ts * 0.0004) * 0.2;
+    requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame(tick);
+
+  // Nav
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
+
+  // Mobile nav
+  const hamburger = document.getElementById('navHamburger');
+  const navLinks = document.getElementById('navLinks');
+  const navClose = document.getElementById('navClose');
+
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.add('mobile-open');
+    navClose.style.display = 'block';
+  });
+
+  navClose.addEventListener('click', () => {
+    navLinks.classList.remove('mobile-open');
+    navClose.style.display = 'none';
+  });
+
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      navLinks.classList.remove('mobile-open');
+      navClose.style.display = 'none';
+    });
+  });
+
+  // Process timeline
+  const processSteps = document.querySelectorAll('.process-step');
+  const processLine = document.getElementById('processLine');
+  const processLineWrap = document.querySelector('.process-line-wrap');
+
+  function updateProcessLine() {
+    if (!processLineWrap || !processLine) return;
+    const wrapRect = processLineWrap.getBoundingClientRect();
+    const wrapHeight = wrapRect.height;
+    const windowH = window.innerHeight;
+    const lastStep = processSteps[processSteps.length - 1];
+    const lastDot = lastStep ? lastStep.querySelector('.process-dot') : null;
+    let maxHeight = wrapHeight;
+    if (lastDot) {
+      const dotRect = lastDot.getBoundingClientRect();
+      maxHeight = dotRect.top - processLineWrap.getBoundingClientRect().top + dotRect.height / 2;
+    }
+    const progress = Math.min(Math.max((windowH * 0.6 - wrapRect.top) / maxHeight, 0), 1);
+    processLine.style.height = (progress * maxHeight) + 'px';
+    processSteps.forEach(step => {
+      if (step.getBoundingClientRect().top < windowH * 0.75) step.classList.add('visible');
+    });
+  }
+
+  window.addEventListener('scroll', updateProcessLine, { passive: true });
+  setTimeout(updateProcessLine, 100);
+
+  // Testimonials
+  const track = document.getElementById('testimonialsTrack');
+  const dots = document.querySelectorAll('.t-dot');
+  let currentSlide = 0;
+
+  function goToSlide(index) {
+    currentSlide = index;
+    track.style.transform = `translateX(-${index * 100}%)`;
+    dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+  }
+
+  dots.forEach(dot => dot.addEventListener('click', () => goToSlide(parseInt(dot.dataset.index))));
+  goToSlide(0);
+
+  // FAQ
+  const faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach(item => {
+    item.querySelector('.faq-question').addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      faqItems.forEach(i => { i.classList.remove('open'); i.querySelector('.faq-question').setAttribute('aria-expanded', 'false'); });
+      if (!isOpen) { item.classList.add('open'); item.querySelector('.faq-question').setAttribute('aria-expanded', 'true'); }
+    });
+  });
+</script>
 
 </body>
 </html>
