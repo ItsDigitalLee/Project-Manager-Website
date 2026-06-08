@@ -10,7 +10,9 @@
 
   <style>
     *, *::before, *::after {
-      margin: 0; padding: 0; box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
     :root {
@@ -28,95 +30,6 @@
       overflow-x: hidden;
     }
 
-    /* ── NAV ── */
-    .nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      display: flex;
-      justify-content: center;
-      padding: 16px 40px;
-      transition: padding 0.4s ease;
-    }
-
-    .nav-inner {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      background: rgba(245, 240, 238, 0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-radius: 999px;
-      padding: 10px 10px 10px 32px;
-      width: 100%;
-      max-width: 1200px;
-      transition: all 0.4s cubic-bezier(0.22,1,0.36,1);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 48px;
-      justify-content: center;
-    }
-
-    .nav-links a {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 400;
-      color: #1a1a1a;
-      text-decoration: none;
-      transition: opacity 0.2s ease;
-    }
-
-    .nav-links a:hover {
-      opacity: 0.5;
-    }
-
-    .nav-end {
-      display: flex;
-      justify-content: flex-end;
-    }
-
-    .nav-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(0,0,0,0.06);
-      border-radius: 999px;
-      padding: 6px 16px 6px 6px;
-      text-decoration: none;
-      color: #1a1a1a;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: background 0.2s ease;
-      white-space: nowrap;
-    }
-
-    .nav-cta:hover {
-      background: rgba(0,0,0,0.1);
-    }
-
-    .nav-avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .nav.scrolled {
-      padding: 16px 80px;
-    }
-
-    .nav.scrolled .nav-inner {
-      max-width: 600px;
-      box-shadow: 0 4px 32px rgba(0,0,0,0.12);
-    }
-
     /* ── HERO ── */
     .hero {
       position: relative;
@@ -126,32 +39,94 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      padding-top: 80px;
     }
 
+    /* ── GRADIENT ORBS ── */
     .orb-wrap {
       position: absolute;
       inset: 0;
       pointer-events: none;
       z-index: 0;
-      overflow: hidden;
     }
 
-    .blob-svg {
+    .orb {
       position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0;
+      animation: orbFadeIn 1.6s ease forwards;
+    }
+
+    .orb-1 {
+      width: 520px;
+      height: 420px;
+      background: radial-gradient(ellipse at center, rgba(0,200,112,0.45) 0%, rgba(0,200,112,0.08) 60%, transparent 80%);
       top: 50%;
       left: 50%;
-      width: 380px;
-      height: 380px;
-      filter: blur(55px);
-      opacity: 0;
-      transition: opacity 2.2s ease;
+      transform: translate(-50%, -60%);
+      animation-name: orbFadeIn, drift1;
+      animation-duration: 1.6s, 18s;
+      animation-delay: 0s, 1.6s;
+      animation-timing-function: ease, ease-in-out;
+      animation-fill-mode: forwards, none;
+      animation-iteration-count: 1, infinite;
     }
 
-    .blob-svg.visible {
-      opacity: 1;
+    .orb-2 {
+      width: 360px;
+      height: 300px;
+      background: radial-gradient(ellipse at center, rgba(0,200,112,0.20) 0%, transparent 70%);
+      top: 30%;
+      left: 35%;
+      animation-name: orbFadeIn, drift2;
+      animation-duration: 2s, 22s;
+      animation-delay: 0.4s, 2s;
+      animation-timing-function: ease, ease-in-out;
+      animation-fill-mode: forwards, none;
+      animation-iteration-count: 1, infinite;
     }
 
+    .orb-3 {
+      width: 280px;
+      height: 260px;
+      background: radial-gradient(ellipse at center, rgba(0,200,112,0.12) 0%, transparent 70%);
+      bottom: 28%;
+      right: 30%;
+      animation-name: orbFadeIn, drift3;
+      animation-duration: 2.4s, 26s;
+      animation-delay: 0.6s, 2.4s;
+      animation-timing-function: ease, ease-in-out;
+      animation-fill-mode: forwards, none;
+      animation-iteration-count: 1, infinite;
+    }
+
+    @keyframes orbFadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @keyframes drift1 {
+      0%   { transform: translate(-50%, -60%); }
+      33%  { transform: translate(-48%, -64%); }
+      66%  { transform: translate(-52%, -57%); }
+      100% { transform: translate(-50%, -60%); }
+    }
+
+    @keyframes drift2 {
+      0%   { transform: translate(0, 0); }
+      40%  { transform: translate(24px, -18px); }
+      75%  { transform: translate(-16px, 14px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    @keyframes drift3 {
+      0%   { transform: translate(0, 0); }
+      35%  { transform: translate(-20px, 16px); }
+      70%  { transform: translate(18px, -12px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    /* ── CONTENT ── */
     .hero-content {
       position: relative;
       z-index: 1;
@@ -159,6 +134,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      gap: 0;
       padding: 0 24px;
     }
 
@@ -188,6 +164,7 @@
       animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.75s forwards;
     }
 
+    /* ── CTA BUTTON ── */
     .cta-btn {
       display: inline-flex;
       align-items: center;
@@ -198,7 +175,7 @@
       font-weight: 500;
       font-size: 0.95rem;
       text-decoration: none;
-      padding: 8px 22px 8px 8px;
+      padding: 10px 22px 10px 10px;
       border-radius: 999px;
       transition: transform 0.22s ease, box-shadow 0.22s ease;
       opacity: 0;
@@ -207,7 +184,7 @@
 
     .cta-btn:hover {
       transform: scale(1.04);
-      box-shadow: 0 8px 32px rgba(0,200,112,0.3);
+      box-shadow: 0 8px 32px rgba(0,200,112,0.25);
     }
 
     .cta-avatar {
@@ -219,6 +196,7 @@
       flex-shrink: 0;
     }
 
+    /* ── CLIENTS ── */
     .clients {
       position: relative;
       z-index: 1;
@@ -242,9 +220,10 @@
       transition: opacity 0.2s ease;
     }
 
+    /* Peak Serum has colour so let's keep it */
     .clients img.logo-peak {
       filter: none;
-      opacity: 0.85;
+      opacity: 0.8;
     }
 
     .clients img:hover {
@@ -259,162 +238,44 @@
 </head>
 <body>
 
-<nav class="nav" id="main-nav">
-  <div class="nav-inner">
-    <div></div>
-    <div class="nav-links">
-      <a href="#about">About</a>
-      <a href="#services">Services</a>
-      <a href="#process">Process</a>
-    </div>
-    <div class="nav-end">
-      <a href="https://cal.com/christian-digitallee/15min" class="nav-cta" target="_blank" rel="noopener">
-        <img src="Christian_Lee_logo_green_background.png" alt="Christian Lee" class="nav-avatar" />
-        <span>Book a call</span>
-      </a>
-    </div>
-  </div>
-</nav>
-
 <section class="hero">
 
+  <!-- Animated gradient orbs -->
   <div class="orb-wrap">
-    <svg class="blob-svg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="blobGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%"   stop-color="#1FC379" />
-          <stop offset="100%" stop-color="#98E6E1" />
-        </linearGradient>
-      </defs>
-      <path id="blob1"
-        d="M250,60 C380,20 500,80 470,220 C440,360 320,460 160,420 C0,380 20,200 80,100 C140,0 120,100 250,60Z"
-        fill="url(#blobGrad)" opacity="1"
-      />
-      <path id="blob2"
-        d="M280,50 C430,10 510,130 470,290 C430,450 260,490 90,430 C-80,370 20,160 110,60 C200,-40 130,90 280,50Z"
-        fill="#98E6E1" opacity="0.6"
-      />
-    </svg>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
   </div>
 
+  <!-- Main copy -->
   <div class="hero-content">
     <h1 class="hero-headline">More capacity. Less chaos.</h1>
     <p class="hero-sub">
       Freelance project manager for agencies and brands. I embed fast, create
       clarity, and make sure nothing falls through the cracks — so you don't have to.
     </p>
+
+    <!-- CTA -->
     <a href="https://cal.com/christian-digitallee/15min" class="cta-btn" target="_blank" rel="noopener">
-      <img src="Christian_Lee_logo_green_background.png" alt="Christian Lee" class="cta-avatar" />
+      <img
+        src="Christian_Lee_logo_green_background.png"
+        alt="Christian Lee"
+        class="cta-avatar"
+      />
       Book a call
     </a>
   </div>
 
+  <!-- Client logos -->
   <div class="clients">
-    <img src="pasqal_logo_1.png"                    alt="Pasqal" />
-    <img src="Peak_Logo__1__1.png"                  alt="Peak Serum" class="logo-peak" style="height: 42px;" />
-    <img src="Group.png"                            alt="Huawei" />
-    <img src="logo-bemyapp-white_1.png"             alt="BEMYAPP" />
-    <img src="ActiveLoop-Logo_1__Vectorized__1.png" alt="Activeloop" style="height: 38px;" />
+    <img src="pasqal_logo_1.png"                          alt="Pasqal" />
+    <img src="Peak_Logo__1__1.png"                        alt="Peak Serum" class="logo-peak" />
+    <img src="Group.png"                                  alt="Huawei" />
+    <img src="logo-bemyapp-white_1.png"                   alt="BEMYAPP" />
+    <img src="ActiveLoop-Logo_1__Vectorized__1.png"       alt="Activeloop" />
   </div>
 
 </section>
-
-<script>
-  const blob1 = document.getElementById('blob1');
-  const blob2 = document.getElementById('blob2');
-  const svgEl = document.querySelector('.blob-svg');
-
-  setTimeout(() => svgEl.classList.add('visible'), 300);
-
-  const shapes1 = [
-    "M250,60 C380,20 500,80 470,220 C440,360 320,460 160,420 C0,380 20,200 80,100 C140,0 120,100 250,60Z",
-    "M300,40 C450,10 520,120 480,280 C440,440 280,480 120,430 C-40,380 10,180 90,80 C170,-20 150,70 300,40Z",
-    "M200,80 C350,10 490,100 460,260 C430,420 260,470 100,420 C-60,370 30,170 100,70 C170,-30 50,150 200,80Z",
-  ];
-
-  const shapes2 = [
-    "M280,50 C430,10 510,130 470,290 C430,450 260,490 90,430 C-80,370 20,160 110,60 C200,-40 130,90 280,50Z",
-    "M230,70 C390,20 500,140 460,300 C420,460 240,500 70,440 C-100,380 15,150 100,50 C185,-50 70,120 230,70Z",
-    "M320,30 C470,0 530,140 485,310 C440,480 250,510 80,450 C-90,390 10,170 105,55 C200,-60 170,60 320,30Z",
-  ];
-
-  function lerp(a, b, t) { return a + (b - a) * t; }
-  function easeInOut(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
-  function parsePath(d) { return d.match(/-?\d+\.?\d*/g).map(Number); }
-
-  const template1 = shapes1[0];
-  const template2 = shapes2[0];
-
-  function rebuildPath(template, nums) {
-    let i = 0;
-    return template.replace(/-?\d+\.?\d*/g, () => Math.round(nums[i++]));
-  }
-
-  const parsed1 = shapes1.map(parsePath);
-  const parsed2 = shapes2.map(parsePath);
-
-  function interpolate(parsed, t) {
-    const total = parsed.length;
-    const scaled = t * total;
-    const i = Math.floor(scaled) % total;
-    const j = (i + 1) % total;
-    const frac = easeInOut(scaled - Math.floor(scaled));
-    return parsed[i].map((v, k) => lerp(v, parsed[j][k], frac));
-  }
-
-  const waypoints = [
-    { x:   0, y:   0, r:  0 },
-    { x: -70, y:   0, r: -8 },
-    { x: -70, y: -80, r:-16 },
-    { x:  10, y: -80, r:  0 },
-    { x:  10, y: -10, r:  8 },
-    { x:   0, y:   0, r:  0 },
-  ];
-
-  const CYCLE = 12000;
-
-  function getWaypoint(ts) {
-    const progress = (ts % CYCLE) / CYCLE;
-    const total = waypoints.length - 1;
-    const scaled = progress * total;
-    const i = Math.min(Math.floor(scaled), total - 1);
-    const j = i + 1;
-    const frac = easeInOut(scaled - i);
-    return {
-      x: lerp(waypoints[i].x, waypoints[j].x, frac),
-      y: lerp(waypoints[i].y, waypoints[j].y, frac),
-      r: lerp(waypoints[i].r, waypoints[j].r, frac),
-    };
-  }
-
-  let t1 = 0;
-  let t2 = 0.4;
-  const speed1 = 0.0008;
-  const speed2 = 0.0005;
-
-  function tick(ts) {
-    t1 = (t1 + speed1) % 1;
-    t2 = (t2 + speed2) % 1;
-
-    blob1.setAttribute('d', rebuildPath(template1, interpolate(parsed1, t1)));
-    blob2.setAttribute('d', rebuildPath(template2, interpolate(parsed2, t2)));
-
-    const { x, y, r } = getWaypoint(ts);
-    svgEl.style.transform = `translate(calc(-50% + ${x}px), calc(-62% + ${y}px)) rotate(${r}deg)`;
-
-    const pulse = 0.55 + Math.sin(ts * 0.0004) * 0.2;
-    svgEl.style.opacity = pulse;
-
-    requestAnimationFrame(tick);
-  }
-
-  requestAnimationFrame(tick);
-
-  const nav = document.getElementById('main-nav');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 60);
-  });
-</script>
 
 </body>
 </html>
